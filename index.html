@@ -1,35 +1,662 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Steven Armenta - SNHU ePortfolio</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Steven Armenta - CS-499 E-Portfolio</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #e0e0e0;
+            background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header Styles */
+        .header {
+            background: linear-gradient(135deg, #003366 0%, #0066cc 100%);
+            color: white;
+            text-align: center;
+            padding: 60px 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="25" cy="25" r="1" fill="rgba(255,255,255,0.1)"/><circle cx="75" cy="75" r="1" fill="rgba(255,255,255,0.1)"/><circle cx="50" cy="10" r="0.5" fill="rgba(255,255,255,0.05)"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
+            opacity: 0.3;
+        }
+
+        .header-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .profile-img {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            border: 4px solid rgba(255,255,255,0.3);
+            margin: 0 auto 20px;
+            background: linear-gradient(45deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 48px;
+            font-weight: bold;
+            color: white;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .header h1 {
+            font-size: 3.5rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            animation: fadeInUp 1s ease-out;
+        }
+
+        .header h2 {
+            font-size: 1.5rem;
+            font-weight: 300;
+            opacity: 0.9;
+            animation: fadeInUp 1s ease-out 0.2s both;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Navigation */
+        .nav {
+            background: rgba(45, 45, 45, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 15px 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 2px solid #0066cc;
+        }
+
+        .nav ul {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+        }
+
+        .nav a {
+            color: #e0e0e0;
+            text-decoration: none;
+            padding: 10px 20px;
+            border-radius: 25px;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+
+        .nav a:hover {
+            background: #0066cc;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 102, 204, 0.3);
+        }
+
+        /* Main Content */
+        .main-content {
+            padding: 60px 0;
+        }
+
+        .section {
+            margin-bottom: 80px;
+            animation: fadeIn 1s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            color: #0066cc;
+            margin-bottom: 30px;
+            text-align: center;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 100px;
+            height: 3px;
+            background: linear-gradient(90deg, #0066cc, #003366);
+            margin: 20px auto;
+            border-radius: 2px;
+        }
+
+        /* About Section */
+        .about-content {
+            background: rgba(45, 45, 45, 0.8);
+            backdrop-filter: blur(10px);
+            padding: 40px;
+            border-radius: 20px;
+            border: 1px solid rgba(0, 102, 204, 0.2);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .about-content p {
+            font-size: 1.1rem;
+            margin-bottom: 20px;
+            color: #d0d0d0;
+            text-align: justify;
+        }
+
+        /* Projects Grid */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .project-card {
+            background: rgba(45, 45, 45, 0.8);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 30px;
+            border: 1px solid rgba(0, 102, 204, 0.2);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .project-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #0066cc, #003366);
+        }
+
+        .project-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 102, 204, 0.2);
+            border-color: #0066cc;
+        }
+
+        .project-title {
+            font-size: 1.5rem;
+            color: #0066cc;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+
+        .project-description {
+            color: #d0d0d0;
+            margin-bottom: 20px;
+            line-height: 1.7;
+        }
+
+        .project-link {
+            display: inline-block;
+            background: linear-gradient(135deg, #0066cc, #003366);
+            color: white;
+            padding: 12px 25px;
+            text-decoration: none;
+            border-radius: 25px;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+
+        .project-link:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(0, 102, 204, 0.4);
+            background: linear-gradient(135deg, #0080ff, #0066cc);
+        }
+
+        /* Contact Section */
+        .contact-info {
+            text-align: center;
+            background: rgba(45, 45, 45, 0.8);
+            backdrop-filter: blur(10px);
+            padding: 40px;
+            border-radius: 20px;
+            border: 1px solid rgba(0, 102, 204, 0.2);
+        }
+
+        .contact-links {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-top: 30px;
+        }
+
+        .contact-link {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: #0066cc;
+            text-decoration: none;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+        }
+
+        .contact-link:hover {
+            color: #0080ff;
+            transform: translateY(-2px);
+        }
+
+        /* Footer */
+        .footer {
+            background: #1a1a1a;
+            color: #888;
+            text-align: center;
+            padding: 30px 0;
+            border-top: 1px solid #333;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2.5rem;
+            }
+            
+            .header h2 {
+                font-size: 1.2rem;
+            }
+            
+            .nav ul {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .projects-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .contact-links {
+                flex-direction: column;
+                gap: 15px;
+            }
+        }
+
+        .project-screenshot {
+            width: 100%;
+            max-width: 500px;
+            height: 250px;
+            object-fit: cover;
+            border-radius: 10px;
+            margin: 20px 0;
+            border: 2px solid rgba(0, 102, 204, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .project-screenshot:hover {
+            border-color: #0066cc;
+            transform: scale(1.02);
+            box-shadow: 0 10px 25px rgba(0, 102, 204, 0.2);
+        }
+
+        .narrative-section {
+            background: rgba(35, 35, 35, 0.9);
+            padding: 25px;
+            border-radius: 15px;
+            margin: 20px 0;
+            border-left: 4px solid #0066cc;
+        }
+
+        .narrative-title {
+            color: #0066cc;
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+
+        .narrative-text {
+            color: #d0d0d0;
+            line-height: 1.7;
+            margin-bottom: 15px;
+        }
+
+        .code-review-section {
+            background: rgba(45, 45, 45, 0.8);
+            backdrop-filter: blur(10px);
+            padding: 40px;
+            border-radius: 20px;
+            border: 1px solid rgba(0, 102, 204, 0.2);
+            text-align: center;
+            margin: 40px 0;
+        }
+
+        .video-placeholder {
+            width: 100%;
+            max-width: 600px;
+            height: 350px;
+            background: linear-gradient(135deg, #2d2d2d, #1a1a1a);
+            border: 2px dashed rgba(0, 102, 204, 0.5);
+            border-radius: 15px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            margin: 20px auto;
+            transition: all 0.3s ease;
+        }
+
+        .video-placeholder:hover {
+            border-color: #0066cc;
+            background: linear-gradient(135deg, #333, #2d2d2d);
+        }
+
+        .video-icon {
+            font-size: 3rem;
+            color: #0066cc;
+            margin-bottom: 15px;
+        }
+
+        /* Scroll animations */
+        .scroll-animate {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s ease;
+        }
+
+        .scroll-animate.animate {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
 </head>
 <body>
-  <h1>Welcome to Steven Armenta's SNHU Computer Science ePortfolio</h1>
-  <p>This portfolio showcases my coursework, projects, and skills.</p>
-  <ul>
-    <li><a href="https://github.com/stevenarmenta1">My GitHub Profile</a></li>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <div class="profile-img">SA</div>
+                <h1>Steven Armenta - CS-499 ePortfolio</h1>
+                <h2>Final Project for Class CS-499 @ Southern New Hampshire University</h2>
+            </div>
+        </div>
+    </header>
 
-    <li>
-      <a href="https://github.com/stevenarmenta1/app-code-design" target="_blank">
-        Inventory Management Application (Object-Oriented Design)
-      </a><br>
-      <small>An Adroid mobile application that demonstrates object-oriented programming.</small>
-    </li>
+    <!-- Navigation -->
+    <nav class="nav">
+        <div class="container">
+            <ul>
+                <li><a href="#about">About</a></li>
+                <li><a href="#code-review">Code Review</a></li>
+                <li><a href="#projects">Projects</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
 
-    <li>
-      <a href="https://github.com/stevenarmenta1/3D-Scene" target="_blank">
-        OpenGL 3D Scene (Graphics and Visualization)
-      </a><br>
-      <small>Interactive 3D environment created using OpenGL, showcasing knowledge of camera movement, lighting, and transformations.</small>
-    </li>
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="container">
+            <!-- About Section -->
+            <section id="about" class="section scroll-animate">
+                <h2 class="section-title">About Me</h2>
+                <div class="about-content">
+                    <p>
+                        Welcome to my CS-499 Computer Science Capstone ePortfolio! I am Steven Armenta, a dedicated Computer Science student at Southern New Hampshire University. This portfolio serves as the culmination of my academic journey, showcasing my growth, achievements, and ability to solve real-world problems through innovative solutions.
+                    </p>
+                    <p>
+                        My time in the Computer Science program has provided me with hands-on experience in software design and engineering, algorithms and data structures, and databases. These experiences have prepared me to make a meaningful impact in the tech industry. Throughout my coursework, I have developed proficiency in multiple programming languages, frameworks, and development methodologies.
+                    </p>
+                    <p>
+                        The artifacts in this ePortfolio reflect my ability to design, develop, and enhance solutions in three critical areas of computer science. Each project demonstrates not only technical proficiency but also my commitment to creating user-centered, efficient, and secure applications that align with industry standards.
+                    </p>
+                </div>
+            </section>
 
-    <li>
-      <a href="https://github.com/stevenarmenta1/Web-Application-Dashboard-Python-Code-" target="_blank">
-        Animal Shelter Web Dashboard (Full Stack Development)
-      </a><br>
-      <small>Full-stack Python project featuring user interface components, database interaction, and CRUD operations.</small>
-    </li>
-  </ul>
+            <!-- Code Review Section -->
+            <section id="code-review" class="section scroll-animate">
+                <h2 class="section-title">Code Review</h2>
+                <div class="code-review-section">
+                    <h3 style="color: #0066cc; margin-bottom: 20px; font-size: 1.8rem;">Professional Code Review</h3>
+                    <p style="color: #d0d0d0; margin-bottom: 30px; font-size: 1.1rem;">
+                        A comprehensive code review demonstrating quality assurance practices, code analysis, and enhancement planning for my capstone artifacts.
+                    </p>
+                    
+                    <!-- Video Placeholder - Replace with actual YouTube embed when ready -->
+                    <div class="video-placeholder">
+                        <div class="video-icon">🎥</div>
+                        <div class="video-text">
+                            <strong>Code Review Video Coming Soon!</strong><br>
+                            <small>This section will contain my comprehensive code review video</small>
+                        </div>
+                    </div>
+                    
+                    <!-- Instructions for when you have the video -->
+                    <div style="margin-top: 20px; padding: 20px; background: rgba(0, 102, 204, 0.1); border-radius: 10px; text-align: left;">
+                        <h4 style="color: #0066cc; margin-bottom: 10px;">📝 To Add Your YouTube Video:</h4>
+                        <p style="color: #d0d0d0; font-size: 0.9rem; margin-bottom: 10px;">
+                            Replace the video-placeholder div above with this YouTube embed code:
+                        </p>
+                        <code style="background: #1a1a1a; padding: 10px; border-radius: 5px; display: block; color: #00ff88; font-size: 0.8rem;">
+                            &lt;iframe width="600" height="350" src="https://www.youtube.com/embed/YOUR_VIDEO_ID" 
+                            frameborder="0" allowfullscreen style="border-radius: 15px;"&gt;&lt;/iframe&gt;
+                        </code>
+                        <p style="color: #d0d0d0; font-size: 0.9rem; margin-top: 10px;">
+                            Replace "YOUR_VIDEO_ID" with your actual YouTube video ID
+                        </p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Projects Section -->
+            <section id="projects" class="section scroll-animate">
+                <h2 class="section-title">Enhanced Artifacts</h2>
+                <div class="projects-grid">
+                    <!-- Project 1: Software Design and Engineering -->
+                    <div class="project-card">
+                        <h3 class="project-title">Enhancement One: Software Design and Engineering</h3>
+                        <p class="project-description">
+                            Android Inventory Management Application demonstrating object-oriented programming principles, enhanced with improved UI/UX design and advanced architectural patterns.
+                        </p>
+                        
+                        <!-- Screenshot Placeholder -->
+                        <img src="https://via.placeholder.com/500x250/2d2d2d/0066cc?text=Add+Your+Screenshot+Here" 
+                             alt="Inventory Management App Screenshot" 
+                             class="project-screenshot">
+                        <p style="text-align: center; color: #888; font-size: 0.9rem; margin-top: -15px;">
+                            📝 Replace with your actual app screenshot
+                        </p>
+                        
+                        <!-- Project Narrative -->
+                        <div class="narrative-section">
+                            <div class="narrative-title">Project Narrative</div>
+                            <div class="narrative-text">
+                                <strong>Original Artifact:</strong> This project began as a basic inventory management system developed for [Course Name]. The original application provided fundamental CRUD operations for inventory tracking.
+                            </div>
+                            <div class="narrative-text">
+                                <strong>Enhancements Made:</strong> I enhanced the application by implementing [specific improvements you made - e.g., improved UI design, added authentication, implemented design patterns, enhanced database integration, etc.]. These improvements demonstrate my growth in software engineering principles and mobile application development.
+                            </div>
+                            <div class="narrative-text">
+                                <strong>Skills Demonstrated:</strong> Object-oriented programming, Android development, UI/UX design, software architecture, and user-centered design principles.
+                            </div>
+                        </div>
+                        
+                        <a href="https://github.com/stevenarmenta1/app-code-design" target="_blank" class="project-link">
+                            View Project Repository →
+                        </a>
+                    </div>
+
+                    <!-- Project 2: Algorithms and Data Structures -->
+                    <div class="project-card">
+                        <h3 class="project-title">Enhancement Two: Algorithms and Data Structures</h3>
+                        <p class="project-description">
+                            Interactive 3D environment using OpenGL, enhanced with optimized algorithms, advanced data structures, and improved rendering performance.
+                        </p>
+                        
+                        <!-- Screenshot Placeholder -->
+                        <img src="https://via.placeholder.com/500x250/2d2d2d/0066cc?text=Add+Your+3D+Scene+Screenshot" 
+                             alt="OpenGL 3D Scene Screenshot" 
+                             class="project-screenshot">
+                        <p style="text-align: center; color: #888; font-size: 0.9rem; margin-top: -15px;">
+                            📝 Replace with your 3D scene screenshot
+                        </p>
+                        
+                        <!-- Project Narrative -->
+                        <div class="narrative-section">
+                            <div class="narrative-title">Project Narrative</div>
+                            <div class="narrative-text">
+                                <strong>Original Artifact:</strong> This artifact started as a 3D scene created using OpenGL for [Course Name]. The original implementation included basic 3D rendering, camera controls, and lighting effects.
+                            </div>
+                            <div class="narrative-text">
+                                <strong>Enhancements Made:</strong> I enhanced the project by [specific algorithmic improvements - e.g., implementing efficient sorting algorithms for object rendering, optimizing data structures for scene management, adding collision detection algorithms, implementing spatial partitioning, etc.]. These enhancements showcase my understanding of computational complexity and optimization techniques.
+                            </div>
+                            <div class="narrative-text">
+                                <strong>Skills Demonstrated:</strong> Algorithm design and analysis, data structure optimization, computer graphics programming, performance optimization, and mathematical computation.
+                            </div>
+                        </div>
+                        
+                        <a href="https://github.com/stevenarmenta1/3D-Scene" target="_blank" class="project-link">
+                            View Project Repository →
+                        </a>
+                    </div>
+
+                    <!-- Project 3: Databases -->
+                    <div class="project-card">
+                        <h3 class="project-title">Enhancement Three: Databases</h3>
+                        <p class="project-description">
+                            Full-stack Python web application with enhanced database architecture, advanced querying capabilities, and comprehensive data visualization dashboard.
+                        </p>
+                        
+                        <!-- Screenshot Placeholder -->
+                        <img src="https://via.placeholder.com/500x250/2d2d2d/0066cc?text=Add+Your+Dashboard+Screenshot" 
+                             alt="Animal Shelter Dashboard Screenshot" 
+                             class="project-screenshot">
+                        <p style="text-align: center; color: #888; font-size: 0.9rem; margin-top: -15px;">
+                            📝 Replace with your dashboard screenshot
+                        </p>
+                        
+                        <!-- Project Narrative -->
+                        <div class="narrative-section">
+                            <div class="narrative-title">Project Narrative</div>
+                            <div class="narrative-text">
+                                <strong>Original Artifact:</strong> This project originated from [Course Name] as a basic animal shelter management system with simple database operations and basic reporting capabilities.
+                            </div>
+                            <div class="narrative-text">
+                                <strong>Enhancements Made:</strong> I significantly enhanced the database layer by [specific database improvements - e.g., implementing advanced queries, adding data validation, creating indexes for performance, implementing user authentication, adding data visualization, creating backup systems, etc.]. These improvements demonstrate my proficiency in database design, security, and full-stack development.
+                            </div>
+                            <div class="narrative-text">
+                                <strong>Skills Demonstrated:</strong> Database design and management, SQL optimization, web development, data security, user authentication, and data visualization techniques.
+                            </div>
+                        </div>
+                        
+                        <a href="https://github.com/stevenarmenta1/Web-Application-Dashboard-Python-Code-" target="_blank" class="project-link">
+                            View Project Repository →
+                        </a>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Contact Section -->
+            <section id="contact" class="section scroll-animate">
+                <h2 class="section-title">Get In Touch</h2>
+                <div class="contact-info">
+                    <p style="font-size: 1.1rem; color: #d0d0d0; margin-bottom: 20px;">
+                        I'm always interested in new opportunities and collaborations. Feel free to reach out!
+                    </p>
+                    <div class="contact-links">
+                        <a href="https://github.com/stevenarmenta1" target="_blank" class="contact-link">
+                            <span>🔗</span> GitHub Profile
+                        </a>
+                        <a href="mailto:steven.armenta@snhu.edu" class="contact-link">
+                            <span>📧</span> Email Me
+                        </a>
+                        <a href="https://linkedin.com/in/stevenarmenta" target="_blank" class="contact-link">
+                            <span>💼</span> LinkedIn
+                        </a>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2025 Steven Armenta. Built with passion for learning and growth.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('animate');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.scroll-animate').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Add some interactive effects
+        document.querySelectorAll('.project-card').forEach(card => {
+            card.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-10px) scale(1.02)';
+            });
+            
+            card.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0) scale(1)';
+            });
+        });
+    </script>
 </body>
 </html>
