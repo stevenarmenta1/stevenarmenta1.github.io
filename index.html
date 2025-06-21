@@ -347,6 +347,25 @@
             transform: scale(1.02);
             box-shadow: 0 10px 25px rgba(0, 102, 204, 0.2);
         }
+       
+        .narrative-title {
+            font-size: 1.8rem;
+            color: #0066cc;
+            margin: 30px 0 20px 0;
+            text-align: center;
+            font-weight: 600;
+            position: relative;
+        }
+
+        .narrative-title::after {
+            content: '';
+            display: block;
+            width: 60px;
+            height: 2px;
+            background: linear-gradient(90deg, #0066cc, #003366);
+            margin: 10px auto;
+            border-radius: 1px;
+        }
 
         /* Repository Links */
         .repo-links {
